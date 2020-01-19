@@ -1,0 +1,9 @@
+server:
+  servlet:
+    context-path: /${spring.application.name}
+spring:
+  application:
+    name: trade-planner  jackson:    serialization:      indent-output: true
+  security:    user:      name: user
+      password: password
+      roles:      - USER
