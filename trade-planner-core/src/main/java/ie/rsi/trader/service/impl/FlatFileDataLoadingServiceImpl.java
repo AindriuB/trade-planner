@@ -126,7 +126,7 @@ public class FlatFileDataLoadingServiceImpl implements DataLoadingService {
 		    }
 		    node.setName(system);
 		    node.setCommodity(tradableCommodity);
-		    node.setPrice(buyPrice);
+		    node.setPrice(sellPrice);
 		    sellNodeRepository.save(node);
 		}
 		

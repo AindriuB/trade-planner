@@ -9,6 +9,9 @@ public interface NodeService {
     
     
     List<Buy> getBuyNodes();
+    List<Buy> getBuyNodesByCommodityId(String commodityId);
+    
     List<Sell> getSellNodes();
+    List<Sell> getSellNodesByCommodityId(String commodityId);
 
 }

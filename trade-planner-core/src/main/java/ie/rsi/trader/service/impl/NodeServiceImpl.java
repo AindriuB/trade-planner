@@ -27,8 +27,18 @@ public class NodeServiceImpl implements NodeService {
     }
     
     @Override
+    public List<Buy> getBuyNodesByCommodityId(String commodityId) {
+	return buyNodeRepo.findAllByCommodityId(commodityId);
+    }
+    
+    @Override
     public List<Sell> getSellNodes() {
 	return sellNodeRepo.findAll();
+    }
+
+    @Override
+    public List<Sell> getSellNodesByCommodityId(String commodityId) {
+	return sellNodeRepo.findAllByCommodityId(commodityId);
     }
 
 }
