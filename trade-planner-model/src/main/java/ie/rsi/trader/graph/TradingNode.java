@@ -8,6 +8,8 @@ public class TradingNode extends Node {
     
     private TradableCommodity commodity;
     
+    private Location location;
+    
     public double getPrice() {
         return price;
     }
@@ -22,6 +24,14 @@ public class TradingNode extends Node {
 
     public void setCommodity(TradableCommodity commodity) {
         this.commodity = commodity;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
 

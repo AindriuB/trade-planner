@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import ie.rsi.trader.graph.Sell;
 
+
 public interface SellNodeRepository extends MongoRepository<Sell,String> {
 
     

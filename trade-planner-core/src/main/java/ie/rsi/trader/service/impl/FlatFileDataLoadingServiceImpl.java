@@ -16,9 +16,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
 import ie.rsi.trader.graph.Buy;
+import ie.rsi.trader.graph.Location;
 import ie.rsi.trader.graph.Sell;
 import ie.rsi.trader.repository.BuyNodeRepository;
 import ie.rsi.trader.repository.CommodityRepository;
+import ie.rsi.trader.repository.LocationRepository;
 import ie.rsi.trader.repository.SellNodeRepository;
 import ie.rsi.trader.service.DataLoadingService;
 import ie.rsi.trader.trade.TradableCommodity;
@@ -30,6 +32,7 @@ public class FlatFileDataLoadingServiceImpl implements DataLoadingService {
 
     private static Pattern HEADER_PATTERN = Pattern.compile("^[^,]*$");
     private static Pattern LINE_ITEM_PATTERN = Pattern.compile("(.*),(.*),(.*)");
+    private static Pattern SYSTEMS_PATTERN = Pattern.compile("(.*),(.*)");
 
     @Value("${market-data.path}")
     private Resource[] marketResources;
@@ -42,6 +45,7 @@ public class FlatFileDataLoadingServiceImpl implements DataLoadingService {
 
     @Autowired
     private CommodityRepository commodityRepository;
+    
     
     @PostConstruct
     public void init() {
@@ -129,9 +133,7 @@ public class FlatFileDataLoadingServiceImpl implements DataLoadingService {
 		    sellNodeRepository.save(node);
 		}
 		
-		
 	   }
-
 	}
     }
 
