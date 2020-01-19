@@ -18,7 +18,7 @@ public class NodeServiceImpl implements NodeService {
     
     @Override
     public List<Node> getNodes() {
-	return nodeRepo.getNodes();
+	return nodeRepo.findAll();
     }
 
 }

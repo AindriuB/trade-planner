@@ -7,5 +7,9 @@ spring:
   security:    user:      name: user
       password: password
       roles:      - USER
+  data:
+    mongodb:
+      database: rsi
+      uri: mongodb+srv://<user>:<password>@cluster0-v3bj2.mongodb.net/rsi?retryWrites=true&w=majority
 market-data:
   path: classpath*:*/*.csv

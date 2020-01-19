@@ -1,16 +1,19 @@
 package ie.rsi.trader.trade;
 
+import org.springframework.data.annotation.Id;
+
 public class TradableCommodity {
 
-    public Integer id;
+    @Id
+    public String id;
     
     public String name;
     
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

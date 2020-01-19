@@ -1,6 +1,12 @@
 package ie.rsi.trader.graph;
 
+import org.springframework.data.annotation.Id;
+
 public class Link {
+    
+
+    @Id
+    private String id;
     
     private Node x;
     

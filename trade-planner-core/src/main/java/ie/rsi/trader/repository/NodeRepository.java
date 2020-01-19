@@ -1,15 +1,12 @@
 package ie.rsi.trader.repository;
 
-import java.util.List;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-import ie.rsi.trader.exception.NotFoundException;
 import ie.rsi.trader.graph.Node;
 
-public interface NodeRepository {
+public interface NodeRepository extends MongoRepository<Node,String> {
 
-    List<Node> getNodes();
     
-    Node getNode(Integer id) throws NotFoundException;
-    
-    Integer saveNode(Node node);
+    Node findByName(String name);
+
 }
