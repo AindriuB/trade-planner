@@ -4,6 +4,7 @@ server:
 spring:
   application:
     name: trade-planner  jackson:    serialization:      indent-output: true
+    default-property-inclusion: non-null
   security:    user:      name: user
       password: password
       roles:      - USER
