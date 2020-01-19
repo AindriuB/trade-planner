@@ -1,12 +1,12 @@
 package ie.rsi.trader.graph;
 
-import ie.rsi.trader.trade.TradableGoods;
+import ie.rsi.trader.trade.TradableCommodity;
 
 public class TradingNode extends Node {
     
     private double price;
     
-    private TradableGoods goods;
+    private TradableCommodity commodity;
     
     
     public double getPrice() {
@@ -17,11 +17,13 @@ public class TradingNode extends Node {
         this.price = price;
     }
 
-    public TradableGoods getGoods() {
-        return goods;
+    public TradableCommodity getCommodity() {
+        return commodity;
     }
 
-    public void setGoods(TradableGoods goods) {
-        this.goods = goods;
+    public void setCommodity(TradableCommodity commodity) {
+        this.commodity = commodity;
     }
+
+
 }

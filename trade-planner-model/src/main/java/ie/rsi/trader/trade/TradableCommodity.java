@@ -1,6 +1,6 @@
 package ie.rsi.trader.trade;
 
-public class TradableGoods {
+public class TradableCommodity {
 
     public Integer id;
     

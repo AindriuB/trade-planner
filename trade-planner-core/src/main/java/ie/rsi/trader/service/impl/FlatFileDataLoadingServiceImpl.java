@@ -20,7 +20,7 @@ import ie.rsi.trader.graph.Node;
 import ie.rsi.trader.graph.SellerNode;
 import ie.rsi.trader.repository.NodeRepository;
 import ie.rsi.trader.service.DataLoadingService;
-import ie.rsi.trader.trade.TradableGoods;
+import ie.rsi.trader.trade.TradableCommodity;
 
 @Service
 public class FlatFileDataLoadingServiceImpl implements DataLoadingService {
@@ -92,13 +92,13 @@ public class FlatFileDataLoadingServiceImpl implements DataLoadingService {
 		double sellPrice = Double.valueOf(lineItem[2]);
 		LOGGER.info("Commodity: {}, Buy: {}, Sell: {}", commodity, buyPrice, sellPrice);
 		
-		TradableGoods tradableGoods = new TradableGoods();
-		tradableGoods.setName(commodity);
+		TradableCommodity tradableCommodity = new TradableCommodity();
+		tradableCommodity.setName(commodity);
 		
 		if(buyPrice >= 0) {
 		    BuyerNode node  = new BuyerNode();
 		    node.setName(system);
-		    node.setGoods(tradableGoods);
+		    node.setCommodity(tradableCommodity);
 		    node.setPrice(buyPrice);
 		    nodeRepository.saveNode(node);
 		} 
@@ -106,7 +106,7 @@ public class FlatFileDataLoadingServiceImpl implements DataLoadingService {
 		if(sellPrice >= 0) {
 		    SellerNode node  = new SellerNode();
 		    node.setName(system);
-		    node.setGoods(tradableGoods);
+		    node.setCommodity(tradableCommodity);
 		    node.setPrice(sellPrice);
 		    nodeRepository.saveNode(node);
 		}
