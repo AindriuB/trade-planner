@@ -33,10 +33,12 @@ public class RouteServiceImpl implements RouteService {
 		.forEach(buy -> sellNodes.stream()
 					.filter(sell -> (sell.getPrice() > 0.0d))
 					.forEach(sell -> {
-                                    	  Link link = new Link();
-                                    	  link.setDepartingNode(buy);
-                                    	  link.setDestinationNode(sell);
-                                    	  links.add(link);
+					    if(sell.getPrice() > buy.getPrice()) {
+                                        	  Link link = new Link();
+                                        	  link.setDepartingNode(buy);
+                                        	  link.setDestinationNode(sell);
+                                        	  links.add(link);
+					    }
 					})
 			);
 	
