@@ -15,9 +15,12 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
+import ie.rsi.trader.graph.Buy;
+import ie.rsi.trader.graph.Sell;
 import ie.rsi.trader.graph.TradingNode;
 import ie.rsi.trader.repository.CommodityRepository;
-import ie.rsi.trader.repository.NodeRepository;
+import ie.rsi.trader.repository.SellNodeRepository;
+import ie.rsi.trader.repository.BuyNodeRepository;
 import ie.rsi.trader.service.DataLoadingService;
 import ie.rsi.trader.trade.TradableCommodity;
 
@@ -33,7 +36,10 @@ public class FlatFileDataLoadingServiceImpl implements DataLoadingService {
     private Resource[] marketResources;
 
     @Autowired
-    private NodeRepository nodeRepository;
+    private BuyNodeRepository buyNodeRepository;
+
+    @Autowired
+    private SellNodeRepository sellNodeRepository;
 
     @Autowired
     private CommodityRepository commodityRepository;
@@ -98,23 +104,30 @@ public class FlatFileDataLoadingServiceImpl implements DataLoadingService {
 		  tradableCommodity.setName(commodity);
 		  tradableCommodity = commodityRepository.save(tradableCommodity);
 		} 
-		
+	
+		Buy existingBuyNode = buyNodeRepository.findByNameAndCommodityId(system, tradableCommodity.getId());
 		if (buyPrice >= 0) {
-		    TradingNode node = new TradingNode();
-		    node.setType(TradingNode.Type.BUYER);
+		    Buy node = new Buy();
+		    if(existingBuyNode != null) {
+			node.setId(existingBuyNode.getId());
+		    }
 		    node.setName(system);
 		    node.setCommodity(tradableCommodity);
 		    node.setPrice(buyPrice);
-		    nodeRepository.save(node);
+
+		    buyNodeRepository.save(node);
 		}
+		Sell existingSellNode = sellNodeRepository.findByNameAndCommodityId(system, tradableCommodity.getId());
 		
 		if(sellPrice >= 0) {
-		    TradingNode node = new TradingNode();
-		    node.setType(TradingNode.Type.SELLER);
+		    Sell node = new Sell();
+		    if(existingSellNode != null) {
+			node.setId(existingSellNode.getId());
+		    }
 		    node.setName(system);
 		    node.setCommodity(tradableCommodity);
 		    node.setPrice(buyPrice);
-		    nodeRepository.save(node);
+		    sellNodeRepository.save(node);
 		}
 		
 		

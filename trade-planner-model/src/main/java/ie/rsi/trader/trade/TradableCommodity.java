@@ -1,7 +1,9 @@
 package ie.rsi.trader.trade;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "commodity")
 public class TradableCommodity {
 
     @Id
