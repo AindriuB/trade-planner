@@ -17,10 +17,9 @@ import org.springframework.util.FileCopyUtils;
 
 import ie.rsi.trader.graph.Buy;
 import ie.rsi.trader.graph.Sell;
-import ie.rsi.trader.graph.TradingNode;
+import ie.rsi.trader.repository.BuyNodeRepository;
 import ie.rsi.trader.repository.CommodityRepository;
 import ie.rsi.trader.repository.SellNodeRepository;
-import ie.rsi.trader.repository.BuyNodeRepository;
 import ie.rsi.trader.service.DataLoadingService;
 import ie.rsi.trader.trade.TradableCommodity;
 
