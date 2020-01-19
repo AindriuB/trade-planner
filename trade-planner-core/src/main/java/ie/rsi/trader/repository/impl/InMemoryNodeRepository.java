@@ -40,7 +40,7 @@ public class InMemoryNodeRepository implements NodeRepository {
 
     @Override
     public Integer saveNode(Node node) {
-	Integer id;
+	Integer id = null;
 	if(nodeRepo.isEmpty()) {
 	    id = Integer.valueOf(1);
 	} else {
@@ -49,7 +49,7 @@ public class InMemoryNodeRepository implements NodeRepository {
 	    
 	    id = ids.get(0) + 1; 
 	}
-	
+	node.setId(id);
 	nodeRepo.put(id, node);
 	
 	return id;

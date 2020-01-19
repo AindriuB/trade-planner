@@ -7,3 +7,5 @@ spring:
   security:    user:      name: user
       password: password
       roles:      - USER
+market-data:
+  path: classpath*:*/*.csv
