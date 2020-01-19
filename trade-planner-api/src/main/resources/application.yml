@@ -1,15 +1,13 @@
 server:
   servlet:
     context-path: /${spring.application.name}
-spring:
-  application:
-    name: trade-planner  jackson:    serialization:      indent-output: true
+spring:  jackson:    serialization:      indent-output: true
   security:    user:      name: user
       password: password
       roles:      - USER
   data:
     mongodb:
       database: rsi
-      uri: mongodb+srv://<user>:<password>@cluster0-v3bj2.mongodb.net/rsi?retryWrites=true&w=majority
+      uri: mongodb+srv://${mongo.user}:${mongo.password}@${mongo.host}/${mongo.db}?retryWrites=true&w=majority
 market-data:
   path: classpath*:*/*.csv
