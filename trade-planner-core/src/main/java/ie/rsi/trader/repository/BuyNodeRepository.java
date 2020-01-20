@@ -11,7 +11,7 @@ public interface BuyNodeRepository extends MongoRepository<Buy,String> {
     
     Buy findByName(String name);
     
-    Buy findByNameAndCommodityId(String name, String commodityId);
+    Buy findByLocationIdAndCommodityId(String name, String commodityId);
 
     List<Buy> findAllByCommodityId(String commodityId);
 }

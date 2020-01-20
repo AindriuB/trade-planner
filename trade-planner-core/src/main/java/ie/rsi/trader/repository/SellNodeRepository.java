@@ -13,7 +13,7 @@ public interface SellNodeRepository extends MongoRepository<Sell,String> {
     Sell findByName(String name);
     
     
-    Sell findByNameAndCommodityId(String name, String commodityId);
+    Sell findByLocationIdAndCommodityId(String name, String commodityId);
 
 
     List<Sell> findAllByCommodityId(String commodityId);

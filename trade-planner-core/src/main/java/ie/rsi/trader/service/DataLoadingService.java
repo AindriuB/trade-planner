@@ -4,4 +4,6 @@ public interface DataLoadingService {
     
     public void loadMarketData();
 
+    public void loadSystemsData();
+
 }
