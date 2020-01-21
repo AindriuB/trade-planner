@@ -2,6 +2,7 @@ package ie.rsi.trader.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.regex.Pattern;
 
@@ -54,8 +55,8 @@ public class FlatFileDataLoadingServiceImpl implements DataLoadingService {
     private LocationRepository locationRepository;
     @PostConstruct
     public void init() {
-	loadSystemsData();
-	loadMarketData();
+	//loadSystemsData();
+	//loadMarketData();
     }
 
     @Override
@@ -156,7 +157,7 @@ public class FlatFileDataLoadingServiceImpl implements DataLoadingService {
 		    }
 		    node.setName(location.getName());
 		    node.setCommodity(tradableCommodity);
-		    node.setPrice(buyPrice);
+		    node.setPrice(BigDecimal.valueOf(buyPrice));
 		    node.setLocation(location);
 
 		    buyNodeRepository.save(node);
@@ -170,7 +171,7 @@ public class FlatFileDataLoadingServiceImpl implements DataLoadingService {
 		    }
 		    node.setName(location.getName());
 		    node.setCommodity(tradableCommodity);
-		    node.setPrice(sellPrice);
+		    node.setPrice(BigDecimal.valueOf(sellPrice));
 		    node.setLocation(location);
 		    sellNodeRepository.save(node);
 		}

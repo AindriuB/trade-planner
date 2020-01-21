@@ -1,20 +1,22 @@
 package ie.rsi.trader.graph;
 
+import java.math.BigDecimal;
+
 import ie.rsi.trader.trade.TradableCommodity;
 
 public class TradingNode extends Node {
    
-    private double price;
+    private BigDecimal price;
     
     private TradableCommodity commodity;
     
     private Location location;
     
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

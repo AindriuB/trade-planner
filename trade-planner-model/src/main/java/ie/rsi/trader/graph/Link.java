@@ -8,9 +8,12 @@ public class Link {
     @Id
     private String id;
     
-    private Node departingNode;
+    private Buy departingNode;
     
-    private Node destinationNode;
+    private Sell destinationNode;
+    
+    
+    private Profitability profitability;
 
     public String getId() {
         return id;
@@ -20,21 +23,31 @@ public class Link {
         this.id = id;
     }
 
-    public Node getDepartingNode() {
+    public Buy getDepartingNode() {
         return departingNode;
     }
 
-    public void setDepartingNode(Node departingNode) {
+    public void setDepartingNode(Buy departingNode) {
         this.departingNode = departingNode;
     }
 
-    public Node getDestinationNode() {
+    public Sell getDestinationNode() {
         return destinationNode;
     }
 
-    public void setDestinationNode(Node destinationNode) {
+    public void setDestinationNode(Sell destinationNode) {
         this.destinationNode = destinationNode;
     }
+
+    public Profitability getProfitability() {
+        return profitability;
+    }
+
+    public void setProfitability(Profitability profitability) {
+        this.profitability = profitability;
+    }
+
+
 
     
     
