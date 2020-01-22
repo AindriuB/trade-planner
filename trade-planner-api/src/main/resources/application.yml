@@ -13,5 +13,6 @@ spring:
       database: rsi
       uri: mongodb+srv://${mongo.user}:${mongo.password}@${mongo.host}/${mongo.db}?retryWrites=true&w=majority
 data:
+  load-on-startup: false
   market: classpath*:**/market/*.csv
   systems: classpath*:**/systems/*.csv

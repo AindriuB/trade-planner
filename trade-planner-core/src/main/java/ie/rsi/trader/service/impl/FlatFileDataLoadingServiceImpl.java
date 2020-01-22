@@ -40,6 +40,8 @@ public class FlatFileDataLoadingServiceImpl implements DataLoadingService {
     @Value("${data.systems}")
     private Resource[] systemsResources;
 
+    @Value("${data.load-on-startup:false}")
+    private boolean loadOnStartup;
     
     @Autowired
     private BuyNodeRepository buyNodeRepository;
@@ -55,8 +57,10 @@ public class FlatFileDataLoadingServiceImpl implements DataLoadingService {
     private LocationRepository locationRepository;
     @PostConstruct
     public void init() {
-	//loadSystemsData();
-	//loadMarketData();
+	if(loadOnStartup) {
+	    loadSystemsData();
+	    loadMarketData();
+	}
     }
 
     @Override
