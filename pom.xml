@@ -12,6 +12,13 @@
 		<version>2.2.1.RELEASE</version>
 		<relativePath />
 	</parent>
+	<developers>
+		<developer>
+			<name>Andrew Bannister</name>
+			<email>aindriubannister@gmail.com</email>
+			<timezone>0</timezone>
+		</developer>
+	</developers>
 
 	<modules>
 		<module>trade-planner-core</module>
