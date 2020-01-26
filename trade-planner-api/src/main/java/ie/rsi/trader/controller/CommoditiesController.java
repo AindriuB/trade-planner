@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ie.rsi.trader.service.CommodityService;
 import ie.rsi.trader.trade.TradableCommodity;
 
-@RequestMapping(path = "/commodities")
+@RequestMapping(path = "/api/commodities")
 @RestController
 public class CommoditiesController {
 

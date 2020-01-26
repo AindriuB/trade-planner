@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ie.rsi.trader.graph.Location;
 import ie.rsi.trader.service.LocationService;
 
-@RequestMapping(path = "/systems")
+@RequestMapping(path = "/api/systems")
 @RestController
 public class SystemsController {
     

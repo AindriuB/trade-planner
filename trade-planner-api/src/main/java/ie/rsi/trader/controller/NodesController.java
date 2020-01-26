@@ -14,7 +14,7 @@ import ie.rsi.trader.graph.Buy;
 import ie.rsi.trader.graph.Sell;
 import ie.rsi.trader.service.NodeService;
 
-@RequestMapping(path = "/nodes")
+@RequestMapping(path = "/api/nodes")
 @RestController
 public class NodesController {
 

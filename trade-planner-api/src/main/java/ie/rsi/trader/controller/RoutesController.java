@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ie.rsi.trader.graph.Link;
 import ie.rsi.trader.service.RouteService;
 
-@RequestMapping(path = "/routes")
+@RequestMapping(path = "/api/routes")
 @RestController
 public class RoutesController {
 
