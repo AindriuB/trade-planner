@@ -7,7 +7,8 @@ import ie.rsi.trader.graph.Sell;
 
 public interface NodeService {
     
-    
+
+    Buy getBuyNode(String buyNodeId);
     List<Buy> getBuyNodes();
     List<Buy> getBuyNodesByCommodityId(String commodityId);
     

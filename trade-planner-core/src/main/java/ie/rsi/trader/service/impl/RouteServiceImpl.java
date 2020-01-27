@@ -2,6 +2,7 @@ package ie.rsi.trader.service.impl;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,11 @@ import org.springframework.stereotype.Service;
 import ie.rsi.trader.graph.Buy;
 import ie.rsi.trader.graph.Link;
 import ie.rsi.trader.graph.Profitability;
+import ie.rsi.trader.graph.Route;
 import ie.rsi.trader.graph.Sell;
+import ie.rsi.trader.graph.TradingNode;
 import ie.rsi.trader.graph.TraversalCost;
+import ie.rsi.trader.graph.compare.LinkProfitabilityComparator;
 import ie.rsi.trader.service.CommodityService;
 import ie.rsi.trader.service.NodeService;
 import ie.rsi.trader.service.RouteService;
@@ -85,6 +89,37 @@ public class RouteServiceImpl implements RouteService {
 	return profitability;
     }
     
+    
+    @Override
+    public Route findRoute() {
+	Route route = new Route();
+	
+	List<Link> links = getRoutes();
+	
+	if(links.isEmpty()) {
+	    return route;
+	}
+	
+	Collections.sort(links, new LinkProfitabilityComparator());
+
+	route.setStartingPoint(links.get(0).getDepartingNode());
+	
+	
+	
+	return route;
+    }
+
+    @Override
+    public Route findRoute(String tradingNodeId) {
+	Route route = new Route();
+	
+	TradingNode tradingNode = nodeService.getBuyNode(tradingNodeId);
+	route.setStartingPoint(tradingNode);
+	
+	
+	
+	return route;
+    }
     
     
 }

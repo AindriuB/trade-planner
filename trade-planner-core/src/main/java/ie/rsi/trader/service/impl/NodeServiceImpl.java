@@ -1,6 +1,7 @@
 package ie.rsi.trader.service.impl;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,14 @@ public class NodeServiceImpl implements NodeService {
     private SellNodeRepository sellNodeRepo;
     
     @Override
+    public Buy getBuyNode(String buyNodeId) {
+	try {
+	    return buyNodeRepo.findById(buyNodeId).get();
+	} catch (NoSuchElementException e) {
+	    return null;
+	}
+    }
+    @Override
     public List<Buy> getBuyNodes() {
 	return buyNodeRepo.findAll();
     }
@@ -40,5 +49,7 @@ public class NodeServiceImpl implements NodeService {
     public List<Sell> getSellNodesByCommodityId(String commodityId) {
 	return sellNodeRepo.findAllByCommodityId(commodityId);
     }
+
+
 
 }
