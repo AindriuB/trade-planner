@@ -26,6 +26,10 @@ public class Link {
     public Buy getDepartingNode() {
         return departingNode;
     }
+    
+    public Location getDepartingLocation() {
+        return (departingNode == null)? null: departingNode.getLocation();
+    }
 
     public void setDepartingNode(Buy departingNode) {
         this.departingNode = departingNode;
@@ -33,6 +37,10 @@ public class Link {
 
     public Sell getDestinationNode() {
         return destinationNode;
+    }
+    
+    public Location getDestinationLocation() {
+        return (destinationNode == null)? null: destinationNode.getLocation();
     }
 
     public void setDestinationNode(Sell destinationNode) {

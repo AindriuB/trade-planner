@@ -1,125 +1,97 @@
 package ie.rsi.trader.service.impl;
 
-import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import javax.print.attribute.standard.MediaSize.Engineering;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ie.rsi.trader.graph.Buy;
 import ie.rsi.trader.graph.Link;
-import ie.rsi.trader.graph.Profitability;
+import ie.rsi.trader.graph.Location;
 import ie.rsi.trader.graph.Route;
-import ie.rsi.trader.graph.Sell;
-import ie.rsi.trader.graph.TradingNode;
-import ie.rsi.trader.graph.TraversalCost;
 import ie.rsi.trader.graph.compare.LinkProfitabilityComparator;
-import ie.rsi.trader.service.CommodityService;
+import ie.rsi.trader.graph.compare.RouteProfitabilityComparator;
+import ie.rsi.trader.service.LinkService;
 import ie.rsi.trader.service.NodeService;
 import ie.rsi.trader.service.RouteService;
-import ie.rsi.trader.trade.TradableCommodity;
 
 @Service
 public class RouteServiceImpl implements RouteService {
-    
-    @Autowired
-    private CommodityService commodityService;
+
+    private static Logger LOGGER = LoggerFactory.getLogger(RouteServiceImpl.class);
+
+    private static final int DEFAULT_ROUTE_LENGTH = 3;
+
     @Autowired
     private NodeService nodeService;
-
-    @Override
-    public List<Link> getRouteByCommodityId(String commodityId) {
-	List<Buy> buyNodes = nodeService.getBuyNodesByCommodityId(commodityId);
-	List<Sell> sellNodes = nodeService.getSellNodesByCommodityId(commodityId);
-	List<Link> links = new ArrayList<Link>();
-	
-	buyNodes
-		.stream()
-		.filter(buy -> (buy.getPrice().compareTo(BigDecimal.ZERO) > 0))
-		.forEach(buy -> sellNodes.stream()
-					.filter(sell -> (sell.getPrice().compareTo(BigDecimal.ZERO) > 0))
-					.forEach(sell -> {
-					    if(sell.getPrice().compareTo(buy.getPrice()) > 0) {
-                                        	  Link link = new Link();
-                                        	  link.setDepartingNode(buy);
-                                        	  link.setDestinationNode(sell);
-                                        	  link.setProfitability(calculateProfitablity(link));
-                                        	  links.add(link);
-					    }
-					})
-			);
-	
-	return links;
-    }
-
-    @Override
-    public List<Link> getRoutes() {
-	List<TradableCommodity> commodities = commodityService.getcommodities();
-	List<Link> links = new ArrayList<Link>();
-	
-	commodities.stream().forEach(commodity -> {
-	    links.addAll(getRouteByCommodityId(commodity.getId()));
-	});
-	
-	return links;
-	
-    }
-
-    private Profitability calculateProfitablity(Link link) {
-	Profitability profitability = new Profitability();
-	Buy depart = link.getDepartingNode();
-	Sell destination = link.getDestinationNode();
-	
-	BigDecimal buyPrice = depart.getPrice();
-	BigDecimal sellPrice = destination.getPrice();
-	
-	if(buyPrice.compareTo(BigDecimal.ZERO) != 0) {
-        	
-        	BigDecimal profit = sellPrice.subtract(buyPrice);
-        	BigDecimal profitMargin = profit.divide(buyPrice, BigDecimal.ROUND_HALF_UP).multiply(BigDecimal.valueOf(100));
-        
-        	TraversalCost traversalCost = new TraversalCost();
-        	traversalCost.setCost(profitMargin);
-        	profitability.setProfit(profit);
-        	profitability.setProfitability(profitMargin);
-	
-	}
-	return profitability;
-    }
     
-    
+    @Autowired
+    private LinkService linkService;
+
     @Override
     public Route findRoute() {
 	Route route = new Route();
-	
-	List<Link> links = getRoutes();
-	
-	if(links.isEmpty()) {
+
+	List<Link> links = linkService.getLinks();
+
+	if (links.isEmpty()) {
 	    return route;
 	}
-	
+
 	Collections.sort(links, new LinkProfitabilityComparator());
 
 	route.setStartingPoint(links.get(0).getDepartingNode());
-	
-	
-	
+
 	return route;
     }
 
     @Override
     public Route findRoute(String tradingNodeId) {
-	Route route = new Route();
+
+	Buy tradingNode = nodeService.getBuyNode(tradingNodeId);
+	List<Route> possibleRoutes = new ArrayList<Route>();
+
+	List<Link> links = linkService.getLinks();
+
+
+	Map<Location, List<Link>> linksByBuyNode = links.stream()
+		.collect(Collectors.groupingBy(Link::getDepartingLocation));
+	Map<Location, List<Buy>> buyNodesByBuyNode = links.stream().map(Link::getDepartingNode).collect(Collectors.groupingBy(Buy::getLocation));
 	
-	TradingNode tradingNode = nodeService.getBuyNode(tradingNodeId);
-	route.setStartingPoint(tradingNode);
 	
 	
+	Location startingLocation = tradingNode.getLocation();
+	Buy currentlocation = tradingNode;
+	Route bestRoute = new Route();
+	bestRoute.setStartingPoint(currentlocation);
+	int index = 0;
+	while (index < DEFAULT_ROUTE_LENGTH) {
+	    index++;
+	    LOGGER.info("currently on node: {}", currentlocation);
+	    
+
+	    Collections.sort(possibleRoutes, new RouteProfitabilityComparator());
+	    
+	    if(!bestRoute.equals(possibleRoutes.get(0))){
+		bestRoute = possibleRoutes.get(0);
+		
+	    }
 	
-	return route;
+	  
+
+	}
+
+	return possibleRoutes.get(0);
     }
-    
-    
+
 }

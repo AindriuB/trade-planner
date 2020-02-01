@@ -36,6 +36,11 @@ public class TradingNode extends Node {
         this.location = location;
     }
 
-
+    @Override
+    public String toString() {
+	return "TradingNode [price=" + price + ", commodity=" + commodity + ", location=" + location + ", getId()="
+		+ getId() + ", getName()=" + getName() + ", hashCode()=" + hashCode() + ", getClass()=" + getClass()
+		+ ", toString()=" + super.toString() + "]";
+    }
 
 }
